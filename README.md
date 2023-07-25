@@ -9,6 +9,8 @@
 Screenshot:
 ![Captura de Tela (375)](https://github.com/dsvipeer/SpikesStripsCustom/assets/112516086/0b566ed1-8817-44c1-be4c-6cce230b1021)
 
+# **[VIDEO PREVIEW](https://www.youtube.com/watch?v=gltovNcpOGY)**
+
 ## Features:
 
 
@@ -17,7 +19,7 @@ Screenshot:
 - **Deploy Sound:** Upon deployment, an immersive sound effect is played.
 
 - **Limit of 2 Strips:** Each player can deploy up to two spike strips at a time.
-- 
+
 - **Tire Disabling:** SpikeStripsCustom targets only NPC vehicles, preventing interference with player vehicles.
 
 ## Installation:
