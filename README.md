@@ -1,6 +1,6 @@
 # SpikeStripsCustom
 
-![SpikeStripsCustom Banner]([link-to-banner-image](https://imgur.com/X03Kad9))
+https://i.imgur.com/X03Kad9.png
 
 ## Description:
 
