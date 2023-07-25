@@ -1,7 +1,5 @@
 # SpikeStripsCustom
 
-</blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
-
 ## Description:
 
 **SpikeStripsCustom** allows you to deploy (with sound) up to 2 strips that can cover good portion of roads and highways and will blow up tires of only NPCs.
