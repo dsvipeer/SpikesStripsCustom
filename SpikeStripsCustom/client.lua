@@ -7,6 +7,7 @@
 
 local SpikeStrips = {}
 local PlayerPed = nil
+local nearbyVehicleThreshold = 2.0
 
 
 local function CreateSpikeStrip(position, heading)
@@ -43,7 +44,7 @@ end
 
 
 local function DeploySpikeStrips(spikesToSpawn)
-    local playerPed = PlayerPedId() -- Fetch the player ped
+    local playerPed = PlayerPedId() 
 
     if not playerPed then
         return
@@ -75,8 +76,6 @@ local function DeploySpikeStrips(spikesToSpawn)
 end
 
 
-
-
 local function RemoveSpikeStrips()
     for _, spikeStrip in ipairs(SpikeStrips) do
         DeleteSpikeStrip(spikeStrip)
@@ -95,16 +94,70 @@ end
 
 
 local function CanDeploySpikeStrips()
-    -- Add any additional conditions to check if the player can deploy spike strips
+  
     return true
 end
 
 
 local function CanRemoveSpikeStrips()
-    -- Add any additional conditions to check if the player can remove spike strips
+  
     return true
 end
 
+local function BurstNearbyVehicleTires(spikeStrip)
+    if not spikeStrip or not DoesEntityExist(spikeStrip) then
+        return
+    end
+
+    local spikePos = GetEntityCoords(spikeStrip)
+    local vehicles = GetGamePool("CVehicle")
+
+    for i = 1, #vehicles do
+        local vehicle = vehicles[i]
+        if IsEntityAVehicle(vehicle) then
+            local driver = GetPedInVehicleSeat(vehicle, -1)
+            if driver and not NetworkGetPlayerIndexFromPed(driver) then
+                if IsVehicleWheelTouchingSpikeStrip(vehicle, spikeStrip) then
+                    BurstAllTires(vehicle)
+                end
+            end
+        end
+    end
+end
+
+
+local function IsVehicleWheelTouchingSpikeStrip(vehicle, spikeStrip)
+    if not DoesEntityExist(vehicle) or not DoesEntityExist(spikeStrip) then
+        return false
+    end
+
+    local spikePos = GetEntityCoords(spikeStrip)
+    local vehiclePos = GetEntityCoords(vehicle)
+    local distance = Vdist2(vehiclePos.x, vehiclePos.y, vehiclePos.z, spikePos.x, spikePos.y, spikePos.z)
+
+   
+    local distanceThreshold = 3.0
+
+    return distance < distanceThreshold * distanceThreshold
+end
+
+
+
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+
+        for i = #SpikeStrips, 1, -1 do
+            local spikeStrip = SpikeStrips[i]
+            if DoesEntityExist(spikeStrip) then
+                BurstNearbyVehicleTires(spikeStrip)
+            else
+                table.remove(SpikeStrips, i)
+            end
+        end
+    end
+end)
 
 local function BurstAllTires(vehicle)
     if not DoesEntityExist(vehicle) then
@@ -131,11 +184,6 @@ end
 
 local function BurstTyre(vehicle, wheelIndex)
     SetVehicleTyreBurst(vehicle, wheelIndex, false, 940.0)
-end
-
-
-local function IsNPCVehicle(vehicle)
-    return not IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1))
 end
 
 
@@ -171,7 +219,7 @@ local function IsVehicleWheelTouchingSpikeStrip(vehicle, spikeStrip)
 
     if hit then
         local distance = #(vehiclePos - endCoords)
-        -- Adjust this threshold value if needed (lower value for more precise contact)
+        
         local threshold = 1.0
         return distance <= threshold
     end
@@ -213,7 +261,7 @@ local function BurstNearbyVehicleTires(spikeStrip)
 
     for i = 1, #vehicles do
         local vehicle = vehicles[i]
-        if IsNPCVehicle(vehicle) and #(spikePos - GetEntityCoords(vehicle)) < 2.0 then -- Adjust this threshold value if needed
+        if #(spikePos - GetEntityCoords(vehicle)) < 2.0 then 
             BurstAllTires(vehicle)
         end
     end
