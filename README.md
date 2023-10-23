@@ -14,14 +14,13 @@ Screenshot:
 
 ## Features:
 
+- **Deploy Spike Strips:** Easily deploy spike strips with a combined key press, strategically placing them to control and disable the tires of approaching vehicles.
 
-- **Deploy Spike Strips:** Easily deploy spike strips with a simple key press, strategically placing them to control and disable the tires of approaching vehicles.
-
-- **Deploy Sound:** Upon deployment, an immersive sound effect is played.
+- **Deploy Sound:** Upon deployment, a sound effect is played.
 
 - **Limit of 2 Strips:** Each player can deploy up to two spike strips at a time.
 
-- **Tire Disabling:** SpikeStripsCustom targets only NPC vehicles, preventing interference with player vehicles.
+- **Tire Disabling:** SpikeStripsCustom targets only NPC vehicles, preventing interference with player vehicles. *Possible Player X NPC in the future.
 
 ## Installation:
 
