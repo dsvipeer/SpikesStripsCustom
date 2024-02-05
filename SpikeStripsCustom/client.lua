@@ -142,8 +142,6 @@ local function IsVehicleWheelTouchingSpikeStrip(vehicle, spikeStrip)
 end
 
 
-
-
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
